@@ -1,0 +1,515 @@
+FORMAT: 1A
+HOST: https://www.ygohub.com/api
+
+# YGOHub API
+
+Documentation for the YGOHub API. A comprehensive API for the Yu-Gi-Oh trading card game which allows access to YGOHub's Yu-Gi-Oh datbase.
+
+__Please consider linking back to [https://www.ygohub.com](https://www.ygohub.com) if you use this API! It would be very much appreciated. Also, post about your project on the YGOHub forums!__
+
+## Card Info [/cards]
+
+### List All Cards [GET /all_cards]
+Retrieves a list of all card names in the database.
+
++ Response 200 (application/json)
+
+        {
+          "status": "success",
+          "cards": [
+            "\"A\" Cell Breeding Device",
+            "\"A\" Cell Incubator",
+            "\"A\" Cell Recombination Device",
+            "\"A\" Cell Scatter Burst",
+            "1st Movement Solo",
+            "3-Hump Lacooda",
+            "30,000-Year White Turtle",
+            "4-Starred Ladybug of Doom",
+            "7",
+            "7 Colored Fish",
+            "7 Completed",
+            "8-Claws Scorpion",
+            "A Cat of Ill Omen",
+            "A Deal with Dark Ruler",
+            "A Feather of the Phoenix",
+            "A Feint Plan",
+            "A Hero Emerges",
+            "A Hero Lives",
+            "A Legendary Ocean",
+            "A Major Upset",
+            "A Man with Wdjat",
+            "A Rival Appears!",
+            "A Wild Monster Appears!",
+            "A Wingbeat of Giant Dragon",
+            "A-Assault Core",
+            "A-Team: Trap Disposal Unit",
+            .....
+            ]
+        }
+        
+### Check Card Info [GET /card_info?name={card_name}]
+Grabs all information on a single card
+
+Most of the response data is self-explanitory, but a few may not be immediately clear.
+
+"is_illegal" refers to cards that cannot be used in a duel, like prize cards. They will appear as Unlimited because they're not on any banlist.
+
+"has_name_condition" refers to if the card is treated as having another name all the time (e.x. Cyber Harpie Lady). If this is the case, then "name_condition" will be set to the name it is treated as being.
+
+Set data is indexed as [region][set_name][language] and set data is formatted {"set_number" => "EXP-EN001", "date" => "2010-10-10", "rarities" => {"Common", "Rare"}}
+
+
++ Parameters
+    + card_name (string) - Name of card
+    
++ Response 200 (application/json)
+
+        {
+          "status": "success",
+          "card": {
+            "name": "Souleater",
+            "image_path": "https://ygohub.com/card_images/a96ddf63-139d-4deb-b8be-f5bdfbcfc20e.jpg",
+            "thumbnail_path": "https://ygohub.com/card_images/a96ddf63-139d-4deb-b8be-f5bdfbcfc20e_thumbnail.jpg",
+            "text": "A living wonder of mystery.",
+            "type": "Monster",
+            "number": "31242786",
+            "price_low": "0.17",
+            "price_avg": "0.25",
+            "price_high": "1.26",
+            "tcgplayer_link": "http://store.tcgplayer.com/yugioh/product/show?productname=Souleater&partner=YGOHub",
+            "is_monster": true,
+            "is_spell": false,
+            "is_illegal": false,
+            "is_trap": false,
+            "has_name_condition": false,
+            "species": "Fish",
+            "monster_types": [
+              "Normal"
+            ],
+            "attack": "1200",
+            "defense": "0",
+            "stars": "4",
+            "attribute": "EARTH",
+            "is_pendulum": false,
+            "is_xyz": false,
+            "is_synchro": false,
+            "is_fusion": false,
+            "is_link": false,
+            "is_extra_deck": false,
+            "has_materials": false,
+            "legality": {
+              "TCG": {
+                "Advanced": "Unlimited",
+                "Traditional": "Unlimited"
+              },
+              "OCG": {
+                "Advanced": "Unlimited"
+              }
+            },
+            "releases": {
+              "OCG": {
+                "Pharaonic Guardian": {
+                  "Asian-English": {
+                    "set_number": "PGD-003",
+                    "rarities": [
+                      "Common"
+                    ],
+                    "date": "2003-10-16"
+                  },
+                  "Korean": {
+                    "set_number": "PGD-KR003",
+                    "rarities": [
+                      "Common"
+                    ],
+                    "date": "2004-12-14"
+                  }
+                }
+              },
+              "TCG": {
+                "Pharaonic Guardian": {
+                  "English (na)": {
+                    "set_number": "PGD-003",
+                    "rarities": [
+                      "Common"
+                    ],
+                    "date": "2003-07-18"
+                  }
+                }
+              }
+            }
+          }
+        }
+        
+### Check Card from Passcode [GET /get_card_from_passcode?passcode={passcode}]
+Gets a card's information from a cards passcode/number. If the card does not have a passcode, the YGOPro ID will work.
+
++ Parameters
+    + passcode (int) - The passcode of the card
+    
++ Response 200 (application/json)
+
+        {
+          "status": "success",
+          "card": {
+            "name": "Souleater",
+            "image_path": "https://ygohub.com/card_images/a96ddf63-139d-4deb-b8be-f5bdfbcfc20e.jpg",
+            "thumbnail_path": "https://ygohub.com/card_images/a96ddf63-139d-4deb-b8be-f5bdfbcfc20e_thumbnail.jpg",
+            "text": "A living wonder of mystery.",
+            "type": "Monster",
+            "number": "31242786",
+            "price_low": "0.17",
+            "price_avg": "0.25",
+            "price_high": "1.26",
+            "tcgplayer_link": "http://store.tcgplayer.com/yugioh/product/show?productname=Souleater&partner=YGOHub",
+            "is_monster": true,
+            "is_spell": false,
+            "is_illegal": false,
+            "is_trap": false,
+            "has_name_condition": false,
+            "species": "Fish",
+            "monster_types": [
+              "Normal"
+            ],
+            "attack": "1200",
+            "defense": "0",
+            "stars": "4",
+            "attribute": "EARTH",
+            "is_pendulum": false,
+            "is_xyz": false,
+            "is_synchro": false,
+            "is_fusion": false,
+            "is_link": false,
+            "is_extra_deck": false,
+            "has_materials": false,
+            "legality": {
+              "TCG": {
+                "Advanced": "Unlimited",
+                "Traditional": "Unlimited"
+              },
+              "OCG": {
+                "Advanced": "Unlimited"
+              }
+            },
+            "releases": {
+              "OCG": {
+                "Pharaonic Guardian": {
+                  "Asian-English": {
+                    "set_number": "PGD-003",
+                    "rarities": [
+                      "Common"
+                    ],
+                    "date": "2003-10-16"
+                  },
+                  "Korean": {
+                    "set_number": "PGD-KR003",
+                    "rarities": [
+                      "Common"
+                    ],
+                    "date": "2004-12-14"
+                  }
+                }
+              },
+              "TCG": {
+                "Pharaonic Guardian": {
+                  "English (na)": {
+                    "set_number": "PGD-003",
+                    "rarities": [
+                      "Common"
+                    ],
+                    "date": "2003-07-18"
+                  }
+                }
+              }
+            }
+          }
+        }
+
+### List New Cards [GET /new_cards?num_cards={num_cards}]
+Grabs the newest cards in the database
+
++ Parameters
+    + num_cards (int) - Number of cards to return (1-20)
+    
++ Response 200 (application/json)
+
+        {
+          "status": "success",
+          "new_cards": [
+            "Magibullet Shooter Calamity",
+            "Shadow Six Samurai - Fuhma",
+            "Gouki Destroy Ogre",
+            "Trickstar Bloody Mary",
+            "Reloader Dragon"
+          ]
+        }
+        
+## Set Info [/sets]
+
+### List All Sets [GET /all_sets]
+Retrieves a list of all set names in the database.
+
++ Response 200 (application/json)
+
+        {
+          "status": "success",
+          "sets": [
+            "2-Player Starter Deck: Yuya & Declan",
+            "2013 Collectible Tins Wave 1",
+            "2013 Collectible Tins Wave 2",
+            "2014 Mega-Tin Mega Pack",
+            "2014 Mega-Tins",
+            "2015 Mega-Tin Mega Pack",
+            "2015 Mega-Tins",
+            "2015 Value Box",
+            "2016 Mega-Tin Mega Pack",
+            "2016 Mega-Tins",
+            "2017 Mega-Tins",
+            "20th Anniversary Pack 1st Wave",
+            "20th Anniversary Pack 2nd Wave",
+            "20th Legendary Collection",
+            "20th Rival Collection",
+            ....
+        }
+        
+### Check Set Info [GET /set_info?name={set_name}]
+Grabs all information on a single set
+
+
++ Parameters
+    + set_name (string) - Name of set
+    
++ Response 200 (application/json)
+
+        {
+          "status": "success",
+          "set": {
+            "name": "Astral Pack Three",
+            "type": "Astral Pack",
+            "regions": [
+              "TCG"
+            ],
+            "languages": [
+              "French",
+              "German",
+              "Italian",
+              "Spanish",
+              "English (na)",
+              "English (eu)",
+              "English (oc)",
+              "Portuguese"
+            ],
+            "language_release_dates": {
+              "French": "2013-09-12",
+              "German": "2013-09-12",
+              "Italian": "2013-09-12",
+              "Spanish": "2013-09-12",
+              "English (na)": "2013-09-13",
+              "English (eu)": "2013-09-13",
+              "English (oc)": "2013-09-13",
+              "Portuguese": "2013-09-21"
+            },
+            "language_cards": {
+              "English (na)": [
+                {
+                  "card_name": "Atlantean Marksman",
+                  "set_number": "AP03-EN001",
+                  "rarities": [
+                    "Ultimate Rare"
+                  ]
+                },
+                {
+                  "card_name": "Maestroke the Symphony Djinn",
+                  "set_number": "AP03-EN002",
+                  "rarities": [
+                    "Ultimate Rare"
+                  ]
+                },
+                {
+                  "card_name": "Fire Formation - Tenki",
+                  "set_number": "AP03-EN003",
+                  "rarities": [
+                    "Ultimate Rare"
+                  ]
+                },
+                ]
+                ....
+            }
+        }
+        
+        
+### Get Set Abbreviations [GET /get_card_set_abbreviations]
+Grabs all abbreviations for all the sets in the database
+    
++ Response 200 (application/json)
+
+        {  
+           "status":"success",
+           "setsAbbreviations":{  
+              "20th Anniversary Pack 1st Wave":[  
+                 "20AP"
+              ],
+              "20th Anniversary Pack 2nd Wave":[  
+                 "20AP"
+              ],
+              "Beginner's Edition 1 (2011)":[  
+                 "BE01"
+              ],
+              "Beginner's Edition 2 (2011)":[  
+                 "BE02"
+              ],
+              "Booster Chronicle":[  
+                 "BC"
+              ],
+              "Booster R2":[  
+                 "B2"
+              ],
+              "Booster R3":[  
+                 "B3"
+              ],
+              "Champion of Black Magic":[  
+                 "303"
+              ],
+              "Code of the Duelist":[  
+                 "COTD"
+              ],
+              "Controller of Chaos":[  
+                 "306"
+              ],
+              "Curse of Anubis":[  
+                 "CA"
+              ],
+              "Duelist Box 2012":[  
+                 "DB12"
+              ],
+              ....
+          }
+        }
+      
+      
+## Banlist Info [/banlists]
+
+### List All Banlists [GET /all_banlists]
+
+Get a list of all banlists. Banlists are formatted [game_type][region][start_date] where game_type refers to Traditional/Advanced/Etc..
+
++ Response 200 (application/json)
+
+        {
+          "status": "success",
+          "banlists": {
+            "Advanced": {
+              "TCG": {
+                "2005-04-01": {
+                  "end_date": "2005-10-01",
+                  "is_active": false
+                },
+                "2016-08-29": {
+                  "end_date": "2017-03-30",
+                  "is_active": false
+                },
+                "2017-03-31": {
+                  "end_date": "2017-06-11",
+                  "is_active": false
+                },
+                "2017-06-12": {
+                  "end_date": null,
+                  "is_active": true
+                }
+              },
+              "OCG": {
+                "2017-01-01": {
+                  "end_date": "2017-03-31",
+                  "is_active": false
+                },
+                "2017-04-01": {
+                  "end_date": "2017-06-30",
+                  "is_active": false
+                },
+                "2017-07-01": {
+                  "end_date": null,
+                  "is_active": true
+                }
+              }
+            },
+            "Traditional": {
+              "TCG": {
+                "2016-08-29": {
+                  "end_date": "2017-03-30",
+                  "is_active": false
+                },
+                "2017-03-31": {
+                  "end_date": "2017-06-11",
+                  "is_active": false
+                },
+                "2017-06-12": {
+                  "end_date": null,
+                  "is_active": true
+                }
+              }
+            }
+          }
+        }
+        
+### Check Banlist Info [GET /banlist_info?region={region}&start_date={start_date}&game_type={game_type}]
+Grabs information on a single banlist
+
+
++ Parameters
+    + region (string) - The region the banlist belongs to
+    + game_type (string) - The game type the banlist belongs to
+    + start_date (string) - The start date of the banlist (formatted as YYYY-MM-DD)
+    
++ Response 200 (application/json)
+
+        {
+          "status": "success",
+          "banlist": {
+            "start_date": "2017-06-12",
+            "end_date": null,
+            "is_active": true,
+            "region": "TCG",
+            "game_type": "Advanced",
+            "cards": [
+              {
+                "card_name": "Apoqliphort Towers",
+                "status": "Forbidden",
+                "previous_status": "Forbidden"
+              },
+              {
+                "card_name": "Blaster, Dragon Ruler of Infernos",
+                "status": "Forbidden",
+                "previous_status": "Forbidden"
+              },
+              {
+                "card_name": "Chaos Emperor Dragon - Envoy of the End",
+                "status": "Forbidden",
+                "previous_status": "Forbidden"
+              },
+              {
+                "card_name": "Cyber Jar",
+                "status": "Forbidden",
+                "previous_status": "Forbidden"
+              },
+              {
+                "card_name": "Cyber-Stein",
+                "status": "Forbidden",
+                "previous_status": "Forbidden"
+              },
+              {
+                "card_name": "Destiny HERO - Disk Commander",
+                "status": "Forbidden",
+                "previous_status": "Forbidden"
+              },
+              {
+                "card_name": "Djinn Releaser of Rituals",
+                "status": "Forbidden",
+                "previous_status": "Forbidden"
+              },
+              {
+                "card_name": "El Shaddoll Construct",
+                "status": "Forbidden",
+                "previous_status": "Forbidden"
+              },
+              ...
+              ]
+          }
