@@ -1,2 +1,2 @@
 # TrinityList
-An API Extension for the Trinity Format Banlist
+A Github drop for the Trinity lflist.config file
